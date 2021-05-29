@@ -1,10 +1,14 @@
 package com.alipay.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alipay.entity.PageResult;
 import com.alipay.entity.Result;
 import com.alipay.pojo.goods.Brand;
 import com.alipay.service.goods.BrandService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Administrator
@@ -17,6 +21,26 @@ public class BrandController {
 
     @Reference
     private BrandService brandService;
+
+    @GetMapping("/findAll")
+    public List<Brand> findAll(){
+        return brandService.findAll();
+    }
+
+    @GetMapping("/findPage")
+    public PageResult<Brand> findPage(int page, int size){
+        return brandService.findPage(page, size);
+    }
+
+    @PostMapping("/findList")
+    public List<Brand> findList(@RequestBody Map<String,Object> searchMap){
+        return brandService.findList(searchMap);
+    }
+
+    @PostMapping("/findPage")
+    public PageResult<Brand> findPage(@RequestBody Map<String,Object> searchMap,int page, int size){
+        return  brandService.findPage(searchMap,page,size);
+    }
 
     @GetMapping("/findById")
     public Brand findById(Integer id){
